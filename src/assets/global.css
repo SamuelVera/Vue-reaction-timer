@@ -1,0 +1,11 @@
+.bad {
+  color: darkred;
+}
+
+.medium {
+  color: darkorange;
+}
+
+.fast {
+  color: green;
+}
