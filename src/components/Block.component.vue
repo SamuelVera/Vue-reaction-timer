@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showBlock" class="block">
+  <div v-if="showBlock" class="block" @click="stopTimer">
     CLICK ME! FAST!
   </div>
 </template>
@@ -11,7 +11,22 @@ export default {
   data() {
     return {
       showBlock: false,
+      //Interval to update reaction time
+      startTime: null,
+      reactionTime: 0,
     };
+  },
+  methods: {
+    /**Starts the timer */
+    startTimer() {
+      //Set a 10 miliseconds step interval to update the reaction time
+      this.startTime = new Date();
+    },
+    /**Stops the timer */
+    stopTimer() {
+      const endTime = new Date();
+      this.reactionTime = endTime.getTime() - this.startTime.getTime();
+    },
   },
   /**After the component has been mounted in the DOM */
   mounted() {
@@ -19,6 +34,7 @@ export default {
     setTimeout(() => {
       //Show the block to be clicked
       this.showBlock = true;
+      this.startTimer();
     }, this.delay);
   },
   /**When the component data has been changed and re-rendered into the DOM */
