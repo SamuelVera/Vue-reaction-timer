@@ -19,13 +19,17 @@ export default {
   methods: {
     /**Starts the timer */
     startTimer() {
-      //Set a 10 miliseconds step interval to update the reaction time
+      //Set a starting time
       this.startTime = new Date();
     },
     /**Stops the timer */
     stopTimer() {
+      /**Time of click of end timer */
       const endTime = new Date();
+      //Calculation for reaction time
       this.reactionTime = endTime.getTime() - this.startTime.getTime();
+      //Emit custom event for end game and pass custom data
+      this.$emit("endgame", this.reactionTime);
     },
   },
   /**After the component has been mounted in the DOM */
@@ -38,13 +42,10 @@ export default {
     }, this.delay);
   },
   /**When the component data has been changed and re-rendered into the DOM */
-  updated() {
-    console.log("Component updated");
-  },
+  updated() {},
   /**When the component has been unmounted from the DOM */
   unmounted() {
     //Good for cleanup
-    console.log("Component unmounted");
   },
 };
 </script>

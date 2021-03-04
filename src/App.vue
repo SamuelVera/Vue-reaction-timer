@@ -1,7 +1,8 @@
 <template>
   <h1>Ninja reaction timer</h1>
   <button @click="startGame" :disabled="isPlaying">Play</button>
-  <Block v-if="isPlaying" :delay="delay" />
+  <p v-if="showResults">Reaction time: {{ score }} ms</p>
+  <Block v-if="isPlaying" :delay="delay" @endgame="onEndGame" />
 </template>
 
 <script>
@@ -15,7 +16,12 @@ export default {
   data() {
     return {
       isPlaying: false,
+      //Values of delay
       delay: null,
+      //Score
+      score: null,
+      /**Show results */
+      showResults: false,
     };
   },
   methods: {
@@ -28,6 +34,15 @@ export default {
         //Set delay for button to appear
         this.delay = 1500 + 5000 * Math.random();
       }
+    },
+    /**Event listener for the end of a game (accepts custom data) */
+    onEndGame(reactionTime) {
+      console.log(reactionTime);
+      //Update score
+      this.score = reactionTime;
+      //End game
+      this.isPlaying = false;
+      this.showResults = true;
     },
   },
 };
